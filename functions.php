@@ -336,3 +336,52 @@ function get_csv($data, $filename)
     }
     echo $str;
 }
+
+/**
+ * 字符串加密函数，需要php_mcrypt扩展库的支持
+ * @param $key
+ * @param $str
+ * @return string
+ */
+function encrypt($key, $str)
+{
+    $encrypted = base64_encode(@mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $str, MCRYPT_MODE_CBC, md5(md5($key))));
+    return $encrypted;
+}
+
+/**
+ * 字符串解密函数，需要php_mcrypt扩展库的支持
+ * @param $key
+ * @param $str
+ * @return string
+ */
+function decrypt($key, $str)
+{
+    $decrypted = rtrim(@mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($str), MCRYPT_MODE_CBC, md5(md5($key))), "12");
+    return $decrypted;
+}
+
+/**
+ * 生成指定长度的随机字符串
+ * @param int $length
+ * @return string
+ */
+function get_random_str($length = 10)
+{
+    $characters = '0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
+}
+
+/**
+ * 获取文件的后缀名
+ * @param $file
+ * @return mixed
+ */
+function get_extension_name($file)
+{
+    return pathinfo($file)['extension'];
+}
