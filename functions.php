@@ -385,3 +385,15 @@ function get_extension_name($file)
 {
     return pathinfo($file)['extension'];
 }
+
+/**
+ * 判断字符串是否json数据，并且字符串长度大于1
+ * 注：$str = "1"; 
+ * @param $string
+ * @return bool
+ */
+function is_json($string)
+{
+    json_decode($string);
+    return (json_last_error() == JSON_ERROR_NONE) && strlen($string) > 1;
+}
