@@ -387,13 +387,12 @@ function get_extension_name($file)
 }
 
 /**
- * 判断字符串是否json数据，并且字符串长度大于1
+ * 判断字符串是否json数据
  * 注：$str = "1"; 
- * @param $string
+ * @param $str
  * @return bool
  */
-function is_json($string)
+function is_json($str)
 {
-    json_decode($string);
-    return (json_last_error() == JSON_ERROR_NONE) && strlen($string) > 1;
+    return is_array(json_decode($str, true));
 }
